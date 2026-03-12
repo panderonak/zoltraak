@@ -1,0 +1,24 @@
+{
+  "name": "@zoltraak/auth",
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "default": "./src/*.ts"
+    }
+  },
+  "scripts": {},
+  "dependencies": {
+    "@zoltraak/db": "workspace:*",
+    "@zoltraak/env": "workspace:*",
+    "better-auth": "catalog:",
+    "dotenv": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@zoltraak/config": "workspace:*",
+    "typescript": "^5"
+  }
+}

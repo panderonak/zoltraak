@@ -1,0 +1,3 @@
+{
+  "extends": "@zoltraak/config/tsconfig.base.json"
+}
