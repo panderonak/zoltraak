@@ -1,5 +1,14 @@
 import { relations } from "drizzle-orm";
-import { pgTable, text, timestamp, boolean, index } from "drizzle-orm/pg-core";
+import {
+  boolean,
+  index,
+  pgEnum,
+  pgTable,
+  text,
+  timestamp,
+} from "drizzle-orm/pg-core";
+
+export const roleEnum = pgEnum("role", ["user", "admin"]);
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -12,6 +21,7 @@ export const user = pgTable("user", {
     .defaultNow()
     .$onUpdate(() => /* @__PURE__ */ new Date())
     .notNull(),
+  role: roleEnum("role").default("user").notNull(),
 });
 
 export const session = pgTable(
@@ -91,3 +101,5 @@ export const accountRelations = relations(account, ({ one }) => ({
     references: [user.id],
   }),
 }));
+
+export type User = typeof user.$inferSelect;

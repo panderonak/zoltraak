@@ -3,13 +3,15 @@
   "type": "module",
   "exports": {
     ".": {
-      "default": "./src/index.ts"
+      "default": "./src/auth.ts"
     },
     "./*": {
       "default": "./src/*.ts"
     }
   },
-  "scripts": {},
+  "scripts": {
+    "auth:generate": "DOTENV_CONFIG_PATH=../../apps/server/.env pnpm dlx auth@latest generate"
+  },
   "dependencies": {
     "@zoltraak/db": "workspace:*",
     "@zoltraak/env": "workspace:*",

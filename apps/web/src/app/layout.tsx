@@ -1,9 +1,18 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Inter, JetBrains_Mono } from "next/font/google";
 
 import "../index.css";
-import Header from "@/components/header";
+import { cn } from "@zoltraak/ui/lib/utils";
+// import Header from "@/components/header";
 import Providers from "@/components/providers";
+import Script from "next/script";
+
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,14 +35,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Providers>
-          <div className="grid grid-rows-[auto_1fr] h-svh">
-            <Header />
-            {children}
-          </div>
-        </Providers>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={cn(jetbrainsMono.variable, "font-sans", inter.variable)}
+    >
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <Script
+          src="https://checkout.razorpay.com/v1/checkout.js"
+          strategy="lazyOnload"
+        />
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

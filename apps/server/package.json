@@ -10,13 +10,18 @@
     "start": "node dist/index.mjs"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1009.0",
+    "@aws-sdk/s3-request-presigner": "^3.1009.0",
     "@zoltraak/auth": "workspace:*",
     "@zoltraak/db": "workspace:*",
     "@zoltraak/env": "workspace:*",
     "better-auth": "catalog:",
     "cors": "^2.8.5",
     "dotenv": "catalog:",
+    "drizzle-orm": "^0.45.2",
     "express": "^5.1.0",
+    "razorpay": "^2.9.6",
+    "uuid": "^13.0.0",
     "zod": "catalog:"
   },
   "devDependencies": {

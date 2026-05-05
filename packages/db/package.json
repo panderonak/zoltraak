@@ -2,12 +2,9 @@
   "name": "@zoltraak/db",
   "type": "module",
   "exports": {
-    ".": {
-      "default": "./src/index.ts"
-    },
-    "./*": {
-      "default": "./src/*.ts"
-    }
+    ".": "./src/index.ts",
+    "./schema": "./src/schema/index.ts",
+    "./schema/*": "./src/schema/*.ts"
   },
   "scripts": {
     "db:push": "drizzle-kit push",
@@ -16,15 +13,15 @@
     "db:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
-    "@neondatabase/serverless": "^1.0.2",
     "@zoltraak/env": "workspace:*",
     "dotenv": "catalog:",
-    "drizzle-orm": "^0.45.1",
+    "drizzle-orm": "^0.45.2",
+    "postgres": "^3.4.9",
     "zod": "catalog:"
   },
   "devDependencies": {
     "@zoltraak/config": "workspace:*",
-    "drizzle-kit": "^0.31.8",
-    "typescript": "^5"
+    "drizzle-kit": "^0.31.10",
+    "typescript": "^5.9.3"
   }
 }

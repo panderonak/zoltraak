@@ -1,0 +1,2 @@
+CREATE TYPE "public"."category_enum" AS ENUM('Fresh', 'Dairy', 'Snacks', 'Beverages', 'Staples', 'Instant Food', 'Personal Care', 'Household');--> statement-breakpoint
+ALTER TABLE "products" ADD COLUMN "category" "category_enum" NOT NULL;

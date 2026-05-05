@@ -18,7 +18,8 @@
     "lib": "@zoltraak/ui/lib",
     "ui": "@zoltraak/ui/components"
   },
-  "menuColor": "default",
+  "menuColor": "default-translucent",
   "menuAccent": "subtle",
-  "registries": {}
+  "registries": {},
+  "rtl": false
 }
