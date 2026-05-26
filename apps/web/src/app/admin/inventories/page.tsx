@@ -14,8 +14,6 @@ import { DataTable } from "@/components/data-table";
 import { ErrorState } from "@/components/error-state";
 import { fetchInventories } from "@/http/api";
 
-// TODO: Use nuqs for pagination
-
 const Page = () => {
   const router = useRouter();
   const [page, setPage] = useState(1);

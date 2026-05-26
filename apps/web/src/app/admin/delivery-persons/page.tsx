@@ -4,13 +4,12 @@ import { useQuery } from "@tanstack/react-query";
 import { Button } from "@zoltraak/ui/components/button";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { DeliveryPersonsEmptyState } from "@/app/admin/delivery-persons/_components/delivery-persons-empty-state";
 import { columns } from "@/app/admin/delivery-persons/_components/columns";
+import { DeliveryPersonsEmptyState } from "@/app/admin/delivery-persons/_components/delivery-persons-empty-state";
 import { DataTable } from "@/components/data-table";
 import { ErrorState } from "@/components/error-state";
 import { fetchDeliveryPersons } from "@/http/api";
 import type { DeliveryPersonResponse } from "@/types";
-// import type { Response } from "@/types";
 
 const Page = () => {
   const router = useRouter();
@@ -25,8 +24,6 @@ const Page = () => {
       staleTime: 120 * 1_000,
     });
 
-  // console.log(JSON.stringify(data, null, 2));
-  console.log(JSON.stringify(data?.data, null, 2));
 
   const items = data?.data.items ?? [];
 

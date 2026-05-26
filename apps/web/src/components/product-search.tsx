@@ -55,8 +55,6 @@ export function ProductSearch({ onValueChange }: ProductSearchProps) {
     staleTime: 1000 * 60 * 2,
   });
 
-  console.log(JSON.stringify(products, null, 2));
-
   function handleSelect(id: string) {
     onValueChange(id);
     setOpen(false);

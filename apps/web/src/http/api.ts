@@ -12,26 +12,23 @@ import type {
   VerifyPaymentPayload,
   WarehousesSearch,
 } from "@/types";
-import { env } from "@zoltraak/env/web";
 
 async function fetchAdminProducts(page: number) {
-  console.log("Reloading...");
   const res = await api.get(`/products/admin?page=${page}&limit=10`);
   return res.data;
 }
 
 async function fetchInventories(page: number) {
-  console.log("Reloading...");
   return await api.get(`/inventories?page=${page}&limit=10`);
 }
 
 async function createWarehouse(values: Pick<Warehouse, "name" | "pincode">) {
-  console.log("Creating");
+
   return await api.post("/warehouses", values);
 }
 
 async function fetchWarehouses(page: number) {
-  console.log("Reloading...");
+
   return await api.get(`/warehouses?page=${page}&limit=10`);
 }
 
@@ -46,7 +43,6 @@ async function searchProducts(query: string) {
 }
 
 async function fetchDeliveryPersons(page: number) {
-  console.log("Reloading...");
   return await api.get(`/delivery-persons?page=${page}&limit=10`);
 }
 
@@ -58,7 +54,7 @@ async function createDeliveryPerson(
 }
 
 async function createInventory(
-  values: Pick<Inventories, "sku" | "warehouseId" | "productId">,
+  values: Pick<Inventories, "sku" | "warehouseId" | "productId" | "quantity">,
 ) {
   const res = await api.post("/inventories", values);
   return res;
@@ -68,10 +64,7 @@ async function fetchOrders(page: number) {
   return await api.get(`/orders/history?page=${page}&limit=10`);
 }
 
-export async function fetchProducts(params: ProductQuery) {
-  const getImageUrl = (name: string) =>
-    `https://${env.NEXT_PUBLIC_DISTRIBUTION_DOMAIN_NAME}/${name}`;
-
+async function fetchProducts(params: ProductQuery) {
   const res = await api.get<ProductsResponse>("/products", {
     params: {
       page: params.page,
@@ -84,11 +77,13 @@ export async function fetchProducts(params: ProductQuery) {
   return res.data;
 }
 
+async function fetchProduct(id: string) {
+  const res = await api.get(`/products/${id}`);
+  return res.data;
+}
+
 async function createOrder(payload: CreateOrderPayload) {
   const res = await api.post<CreateOrderResponse>("/orders", payload);
-
-  console.log(res.statusText);
-  console.log(res.status);
   return res.data;
 }
 
@@ -97,17 +92,60 @@ async function verifyPayment(payload: VerifyPaymentPayload) {
   return res.data;
 }
 
+function updateDeliveryPerson(
+  id: string,
+  data: Partial<{ status: "available" | "busy" | "offline" }>,
+) {
+  return api.patch(`/delivery-persons/${id}`, data);
+}
+
+function deleteDeliveryPerson(id: string) {
+  return api.delete(`/delivery-persons/${id}`);
+}
+
+function completeDelivery(deliveryPersonId: string, orderId: string) {
+  return api.post("/delivery-persons/complete-delivery", {
+    deliveryPersonId,
+    orderId,
+  });
+}
+
+function deleteInventory(id: string) {
+  return api.delete(`/inventories/${id}`);
+}
+
+function fetchDeliveryPersonOrders(id: string, page: number) {
+  return api.get(`/delivery-persons/${id}/orders?page=${page}`);
+}
+
+function updateInventory(id: string, data: Partial<{ quantity: number }>) {
+  return api.patch(`/inventories/${id}`, data);
+}
+
+function becomeSeller(): Promise<{ success: boolean }> {
+  return api.post("/users/become-seller");
+}
+
 export {
-  fetchAdminProducts,
-  fetchInventories,
-  createWarehouse,
-  fetchWarehouses,
-  searchWarehouses,
-  fetchDeliveryPersons,
-  fetchOrders,
-  searchProducts,
+  becomeSeller,
+  completeDelivery,
   createDeliveryPerson,
   createInventory,
   createOrder,
+  createWarehouse,
+  deleteDeliveryPerson,
+  deleteInventory,
+  fetchAdminProducts,
+  fetchDeliveryPersonOrders,
+  fetchDeliveryPersons,
+  fetchInventories,
+  fetchOrders,
+  fetchProduct,
+  fetchProducts,
+  fetchWarehouses,
+  searchProducts,
+  searchWarehouses,
+  updateDeliveryPerson,
+  updateInventory,
   verifyPayment,
 };

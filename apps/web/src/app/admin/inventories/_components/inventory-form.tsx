@@ -19,6 +19,7 @@ import {
   FieldLabel,
 } from "@zoltraak/ui/components/field";
 import { Input } from "@zoltraak/ui/components/input";
+import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -26,7 +27,6 @@ import * as z from "zod";
 import { ProductSearch } from "@/components/product-search";
 import { WarehouseSearch } from "@/components/warehouse-search";
 import { createInventory } from "@/http/api";
-import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
   sku: z
@@ -34,6 +34,10 @@ const formSchema = z.object({
     .length(8, { error: "SKU should be 8 characters long" }),
   warehouseId: z.uuid({ error: "Warehouse Id is not valid" }),
   productId: z.uuid({ error: "Product Id is not valid" }),
+  quantity: z
+    .number({ error: "Quantity is required" })
+    .int()
+    .min(0, { error: "Quantity cannot be negative" }),
 });
 
 export function InventoryForm() {
@@ -46,13 +50,17 @@ export function InventoryForm() {
       sku: "",
       warehouseId: "",
       productId: "",
+      quantity: 0,
     },
   });
 
   const { mutate, isPending } = useMutation({
     mutationKey: ["create-inventory"],
     mutationFn: (
-      values: Pick<Inventories, "sku" | "warehouseId" | "productId">,
+      values: Pick<
+        Inventories,
+        "sku" | "warehouseId" | "productId" | "quantity"
+      >,
     ) => createInventory(values),
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -71,7 +79,7 @@ export function InventoryForm() {
   }
 
   return (
-    <Card className="w-full sm:max-w-md">
+    <Card>
       <CardHeader>
         <CardTitle>Add Inventory</CardTitle>
       </CardHeader>
@@ -128,6 +136,35 @@ export function InventoryForm() {
 
                   <ProductSearch onValueChange={field.onChange} />
 
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+
+            <Controller
+              name="quantity"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor="quantity">Quantity</FieldLabel>
+                  <FieldDescription>
+                    Initial stock count for this inventory item
+                  </FieldDescription>
+
+                  <Input
+                    {...field}
+                    id="quantity"
+                    type="number"
+                    min={0}
+                    onChange={(e) => {
+                      const value = e.target.valueAsNumber;
+                      field.onChange(Number.isNaN(value) ? undefined : value);
+                    }}
+                    aria-invalid={fieldState.invalid}
+                    placeholder="e.g. 100"
+                  />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
                   )}

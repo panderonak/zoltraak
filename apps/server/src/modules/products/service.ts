@@ -14,7 +14,6 @@ import {
 import type { PaginatedResult } from "@/types";
 
 async function getPresignedUrls(req: Request, res: Response) {
-  console.log("I am here");
   try {
     const preSignedUrlsValidation = preSignedUrlSchema.safeParse(req.body);
 
@@ -164,6 +163,9 @@ const getProduct: RequestHandler<{ id: string }> = async (req, res) => {
 
     const product = await db.query.products.findFirst({
       where: (product, { eq }) => eq(product.id, id),
+      with: {
+        images: true,
+      },
     });
 
     if (!product) {
@@ -199,8 +201,6 @@ async function searchProducts(req: Request, res: Response) {
   }
 
   const { query } = productValidation.data;
-
-  console.log("QUERY=>", query);
 
   const result = await db
     .select({
@@ -259,8 +259,6 @@ async function getProducts(req: Request, res: Response) {
   const page = Math.max(1, Number(req.query.page) || 1);
   const limit = Math.max(1, Number(req.query.limit) || 20);
   const offset = (page - 1) * limit;
-
-  const category = req.query.category as string | undefined;
 
   const sortKey = isSortKey(req.query.sort) ? req.query.sort : "newest";
 

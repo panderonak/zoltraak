@@ -1,5 +1,6 @@
 "use client";
 
+import type { Session } from "@zoltraak/auth";
 import {
   Sidebar,
   SidebarContent,
@@ -9,76 +10,47 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@zoltraak/ui/components/sidebar";
-import { Skeleton } from "@zoltraak/ui/components/skeleton";
 import {
   Blocks,
   BoxIcon,
-  ChartLine,
   FlowerIcon,
   ShoppingCart,
   Users,
   Warehouse,
 } from "lucide-react";
-import { redirect } from "next/navigation";
+import type { Route } from "next";
+import Link from "next/link";
 import type * as React from "react";
 import { NavProjects } from "@/components/nav-projects";
 import { NavUser } from "@/components/nav-user";
 import { useSession } from "@/lib/auth-client";
 
-const data = {
-  navMain: [
-    {
-      name: "Dashboard",
-      url: "#",
-      icon: <ChartLine />,
-    },
-    {
-      name: "Products",
-      url: "#",
-      icon: <BoxIcon />,
-    },
-    {
-      name: "Warehouses",
-      url: "#",
-      icon: <Warehouse />,
-    },
-    {
-      name: "Delivery Persons",
-      url: "#",
-      icon: <Users />,
-    },
-    {
-      name: "Orders",
-      url: "#",
-      icon: <ShoppingCart />,
-    },
-    {
-      name: "Inventories",
-      url: "#",
-      icon: <Blocks />,
-    },
-  ],
-};
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { data: session, isPending } = useSession();
+const NAV_ITEMS: {
+  name: string;
+  url: Route;
+  icon: React.ReactNode;
+}[] = [
+  { name: "Products", url: "/admin/products", icon: <BoxIcon /> },
+  { name: "Warehouses", url: "/admin/warehouses", icon: <Warehouse /> },
+  { name: "Delivery Persons", url: "/admin/delivery-persons", icon: <Users /> },
+  { name: "Orders", url: "/admin/orders", icon: <ShoppingCart /> },
+  { name: "Inventories", url: "/admin/inventories", icon: <Blocks /> },
+];
 
-  if (isPending) {
-    // TODO: Improve this
-    return <Skeleton className="h-9 w-24" />;
-  }
+interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  initialSession: Session;
+}
 
-  if (!session) {
-    return redirect("/sign-in");
-  }
-
-  const { user } = session;
+export function AppSidebar({ initialSession, ...props }: AppSidebarProps) {
+  const { data: session } = useSession();
+  const user = session?.user ?? initialSession.user;
 
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" render={<a href="#" />}>
+            <SidebarMenuButton size="lg" render={<Link href="/products" />}>
               <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                 <FlowerIcon className="size-6" />
               </div>
@@ -90,9 +62,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
+
       <SidebarContent>
-        <NavProjects projects={data.navMain} />
+        <NavProjects projects={NAV_ITEMS} />
       </SidebarContent>
+
       <SidebarFooter>
         <NavUser user={user} />
       </SidebarFooter>

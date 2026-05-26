@@ -7,9 +7,6 @@ async function attachSession(req: Request, _res: Response, next: NextFunction) {
     headers: fromNodeHeaders(req.headers),
   });
 
-  console.log("cookies:", req.headers.cookie);
-  console.log(`[SESSION] -> ${session}`);
-
   if (session) {
     req.session = session;
     req.user = session.user;

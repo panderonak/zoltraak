@@ -29,6 +29,34 @@
       "when": 1777889006375,
       "tag": "0003_sturdy_saracen",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1779191216419,
+      "tag": "0004_burly_lethal_legion",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1779361818804,
+      "tag": "0005_busy_ronan",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1779446829875,
+      "tag": "0006_pale_typhoid_mary",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1779619696665,
+      "tag": "0007_strange_hulk",
+      "breakpoints": true
     }
   ]
 }

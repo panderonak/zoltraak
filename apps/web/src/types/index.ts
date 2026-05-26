@@ -59,6 +59,7 @@ type DeliveryPersonResponse = {
     warehouse: {
       name: string;
     };
+    status: "available" | "busy" | "offline";
   }[];
   currentPage: number;
   totalPages: number;
@@ -133,11 +134,58 @@ type ProductsResponse = {
   totalPages: number;
 };
 
+type ProductResponse = {
+  id: string;
+  sellerId: string;
+  name: string;
+  description: string;
+  price: string;
+  category: string;
+  createdAt: string;
+  updatedAt: string;
+  images: {
+    id: string;
+    name: string;
+    product_id: string;
+    createdAt: string;
+    updatedAt: string;
+  }[];
+};
+
+type DeliveryPersonOrdersResponse = {
+  person: {
+    id: string;
+    name: string;
+    phone: string;
+    status: "available" | "busy" | "offline";
+    orderId: string | null;
+    warehouse: { name: string };
+  };
+  items: {
+    id: string;
+    status: "received" | "reserved" | "payment_pending" | "paid" | "failed";
+    price: number;
+    address: string;
+    createdAt: string;
+    user: { name: string; email: string };
+    orderItems: {
+      quantity: number;
+      price: number;
+      product: { name: string };
+    }[];
+    inventories: { sku: string; quantity: number }[];
+  }[];
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+};
+
 export type Product = ProductsResponse["items"][number];
 
 export type Sort = "newest" | "price_asc" | "price_desc";
 
-// TYPES
 type CreateOrderPayload = {
   items: {
     productId: string;
@@ -164,10 +212,12 @@ export type {
   AdminProductsResponse,
   CreateOrderPayload,
   CreateOrderResponse,
+  DeliveryPersonOrdersResponse,
   DeliveryPersonResponse,
   FileWithProgress,
   OrdersResponse,
   ProductQuery,
+  ProductResponse,
   ProductsResponse,
   ProductsSearch,
   VerifyPaymentPayload,

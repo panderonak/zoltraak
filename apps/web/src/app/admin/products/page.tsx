@@ -12,8 +12,6 @@ import { ErrorState } from "@/components/error-state";
 import { fetchAdminProducts } from "@/http/api";
 import type { AdminProductsResponse } from "@/types";
 
-// TODO: Use nuqs for pagination
-
 const Page = () => {
   const router = useRouter();
   const [page, setPage] = useState(1);
@@ -26,8 +24,6 @@ const Page = () => {
       refetchOnWindowFocus: false,
       staleTime: 120 * 1_000,
     });
-
-  console.log(JSON.stringify(data, null, 2));
 
   const items = data?.items ?? [];
 

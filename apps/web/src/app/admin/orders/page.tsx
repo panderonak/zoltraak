@@ -18,10 +18,8 @@ const Page = () => {
       queryFn: () => fetchOrders(page),
       placeholderData: (prev) => prev,
       refetchOnWindowFocus: false,
-      staleTime: 120 * 1_000, // TODO: Add it to the provider
+      staleTime: 120 * 1_000,
     });
-
-  console.log(JSON.stringify(data?.data, null, 2));
 
   const items = data?.data.items ?? [];
 

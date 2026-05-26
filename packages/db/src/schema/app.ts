@@ -1,6 +1,7 @@
 import { user } from "@zoltraak/db/schema/auth";
 import { relations } from "drizzle-orm";
 import {
+  type AnyPgColumn,
   integer,
   numeric,
   pgEnum,
@@ -21,6 +22,12 @@ export const categoryEnum = pgEnum("category_enum", [
   "Instant Food",
   "Personal Care",
   "Household",
+]);
+
+export const deliveryPersonStatusEnum = pgEnum("delivery_person_status", [
+  "available",
+  "busy",
+  "offline",
 ]);
 
 export const products = pgTable("products", {
@@ -59,6 +66,9 @@ export const warehouses = pgTable(
   "warehouses",
   {
     id: uuid("id").primaryKey().defaultRandom(),
+    ownerId: text("owner_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
     name: text("name").notNull(),
     pincode: text("pincode").notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -70,13 +80,12 @@ export const warehouses = pgTable(
   (table) => [uniqueIndex("pincode_ids").on(table.pincode)],
 );
 
-export const deliveryTypeEnum = pgEnum("order_type", ["instant", "standard"]);
-
 export const orderStatusEnum = pgEnum("order_status", [
   "received",
   "reserved",
   "payment_pending",
   "paid",
+  "delivered",
   "failed",
 ]);
 
@@ -85,6 +94,10 @@ export const orders = pgTable("orders", {
   userId: text("user_id")
     .references(() => user.id, { onDelete: "cascade" })
     .notNull(),
+  deliveryPersonId: uuid("delivery_person_id").references(
+    (): AnyPgColumn => deliveryPersons.id,
+    { onDelete: "set null" },
+  ),
   paymentId: text("payment_id").unique(),
   status: orderStatusEnum("status").notNull(),
   price: integer("price").notNull(),
@@ -115,6 +128,9 @@ export const orderItems = pgTable("order_items", {
 
 export const deliveryPersons = pgTable("delivery_persons", {
   id: uuid().primaryKey().defaultRandom(),
+  ownerId: text("owner_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
   name: text("name").notNull(),
   phone: text("phone").notNull(),
   warehouseId: uuid("warehouse_id").references(() => warehouses.id, {
@@ -125,6 +141,7 @@ export const deliveryPersons = pgTable("delivery_persons", {
     .references(() => orders.id, {
       onDelete: "set null",
     }),
+  status: deliveryPersonStatusEnum("status").default("available").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
     .defaultNow()
@@ -134,6 +151,9 @@ export const deliveryPersons = pgTable("delivery_persons", {
 
 export const inventories = pgTable("inventories", {
   id: uuid("id").primaryKey().defaultRandom(),
+  ownerId: text("owner_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
   sku: varchar("sku", { length: 8 }).unique().notNull(),
   orderId: uuid("order_id").references(() => orders.id, {
     onDelete: "set null",
@@ -144,16 +164,13 @@ export const inventories = pgTable("inventories", {
   productId: uuid("product_id").references(() => products.id, {
     onDelete: "cascade",
   }),
+  quantity: integer("quantity").default(0).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
     .defaultNow()
     .$onUpdate(() => /* @__PURE__ */ new Date())
     .notNull(),
 });
-
-export const userOrdersRelations = relations(user, ({ many }) => ({
-  orders: many(orders),
-}));
 
 export const ordersRelations = relations(orders, ({ one, many }) => ({
   user: one(user, {
@@ -163,6 +180,10 @@ export const ordersRelations = relations(orders, ({ one, many }) => ({
   deliveryPersons: one(deliveryPersons, {
     fields: [orders.id],
     references: [deliveryPersons.orderId],
+  }),
+  deliveryPerson: one(deliveryPersons, {
+    fields: [orders.deliveryPersonId],
+    references: [deliveryPersons.id],
   }),
   inventories: many(inventories),
   orderItems: many(orderItems),
@@ -196,6 +217,10 @@ export const productImagesRelations = relations(productImages, ({ one }) => ({
 export const deliveryPersonsRelations = relations(
   deliveryPersons,
   ({ one }) => ({
+    owner: one(user, {
+      fields: [deliveryPersons.ownerId],
+      references: [user.id],
+    }),
     order: one(orders, {
       fields: [deliveryPersons.orderId],
       references: [orders.id],
@@ -208,6 +233,10 @@ export const deliveryPersonsRelations = relations(
 );
 
 export const inventoriesRelations = relations(inventories, ({ one }) => ({
+  owner: one(user, {
+    fields: [inventories.ownerId],
+    references: [user.id],
+  }),
   order: one(orders, {
     fields: [inventories.orderId],
     references: [orders.id],
@@ -222,7 +251,18 @@ export const inventoriesRelations = relations(inventories, ({ one }) => ({
   }),
 }));
 
-export const warehousesRelations = relations(warehouses, ({ many }) => ({
+export const warehousesRelations = relations(warehouses, ({ one, many }) => ({
+  owner: one(user, {
+    fields: [warehouses.ownerId],
+    references: [user.id],
+  }),
+  inventories: many(inventories),
+  deliveryPersons: many(deliveryPersons),
+}));
+
+export const ownerRelations = relations(user, ({ many }) => ({
+  orders: many(orders),
+  warehouses: many(warehouses),
   inventories: many(inventories),
   deliveryPersons: many(deliveryPersons),
 }));

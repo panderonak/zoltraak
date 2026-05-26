@@ -56,7 +56,6 @@ export function WarehouseForm() {
   });
 
   function onSubmit(values: z.infer<typeof warehouseSchema>) {
-    console.log(values);
     mutate(values);
   }
 

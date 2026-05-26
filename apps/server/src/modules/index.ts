@@ -3,6 +3,7 @@ import { deliveryPersons } from "@/modules/delivery-persons";
 import { inventories } from "@/modules/inventories";
 import { orders } from "@/modules/orders";
 import { products } from "@/modules/products";
+import { users } from "@/modules/users";
 import { warehouses } from "@/modules/warehouses";
 
 const router: Router = Router();
@@ -12,5 +13,6 @@ router.use("/warehouses", warehouses);
 router.use("/delivery-persons", deliveryPersons);
 router.use("/inventories", inventories);
 router.use("/orders", orders);
+router.use("/users", users);
 
 export { router };

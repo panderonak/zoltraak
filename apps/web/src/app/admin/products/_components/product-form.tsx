@@ -146,7 +146,6 @@ export function ProductForm() {
   };
 
   async function onSubmit(values: z.infer<typeof productSchema>) {
-    console.log(values);
     setUploading(true);
 
     const { name, description, price, category } = values;

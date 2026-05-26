@@ -1,9 +1,8 @@
 "use client";
 
-import { formatPrice } from "@/lib/price";
 import { Button, buttonVariants } from "@zoltraak/ui/components/button";
-import { Separator } from "@zoltraak/ui/components/separator";
 import { ScrollArea } from "@zoltraak/ui/components/scroll-area";
+import { Separator } from "@zoltraak/ui/components/separator";
 import {
   Sheet,
   SheetClose,
@@ -16,12 +15,13 @@ import {
 } from "@zoltraak/ui/components/sheet";
 import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
-import { useCart } from "@/hooks/use-cart";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import CartItem from "@/components/cart-item";
-import { cn } from "@/lib/utils";
-import Link from "next/link";
 import { FEE } from "@/config";
+import { useCart } from "@/hooks/use-cart";
+import { formatPrice } from "@/lib/price";
+import { cn } from "@/lib/utils";
 
 export function Cart() {
   const { items } = useCart((state) => state);
@@ -104,16 +104,6 @@ export function Cart() {
           </>
         ) : (
           <div className="flex h-full flex-col items-center justify-center space-y-1">
-            <div
-              aria-hidden="true"
-              className="relative mb-4 h-60 w-60 text-muted-foreground"
-            >
-              <Image
-                src="/assets/online-shopping.svg"
-                fill
-                alt="empty shopping cart"
-              />
-            </div>
             <div className="font-semibold text-xl">Your cart is empty</div>
             <SheetTrigger>
               <Link

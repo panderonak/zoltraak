@@ -23,10 +23,7 @@ const Page = () => {
       placeholderData: (prev) => prev,
       refetchOnWindowFocus: false,
       staleTime: 120 * 1_000,
-      // TODO: Add the stale time in the query provider for consistency
     });
-
-  console.log(JSON.stringify(data?.data, null, 2));
 
   const items = data?.data.items ?? [];
 

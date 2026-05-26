@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import type { DeliveryPerson } from "@zoltraak/db/schema";
 import { Button } from "@zoltraak/ui/components/button";
 import {
   Card,
@@ -18,15 +19,15 @@ import {
   FieldLabel,
 } from "@zoltraak/ui/components/field";
 import { Input } from "@zoltraak/ui/components/input";
+import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import type * as z from "zod";
 import { WarehouseSearch } from "@/components/warehouse-search";
-import { deliveryPersonSchema } from "@/validators/delivery-persons";
-import type { DeliveryPerson } from "@zoltraak/db/schema";
 import { createDeliveryPerson } from "@/http/api";
-import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { extractApiError } from "@/lib/extract-api-error";
+import { deliveryPersonSchema } from "@/validators/delivery-persons";
 
 export function DeliveryPersonForm() {
   const router = useRouter();
@@ -54,7 +55,10 @@ export function DeliveryPersonForm() {
       form.reset();
       router.push("/admin/delivery-persons");
     },
-    onError: (err) => toast(err.message || "Unable to create delivery person"),
+    onError: (err) => {
+      const { message } = extractApiError(err);
+      toast(message);
+    },
   });
 
   function onSubmit(values: z.infer<typeof deliveryPersonSchema>) {
@@ -62,7 +66,7 @@ export function DeliveryPersonForm() {
   }
 
   return (
-    <Card className="w-full sm:max-w-md">
+    <Card>
       <CardHeader>
         <CardTitle>Add Delivery Person</CardTitle>
       </CardHeader>
