@@ -161,7 +161,7 @@ NODE_ENV=development
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
 S3_BUCKET_NAME=
-AWS_ACCESS_KEY=
+AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
 RAZORPAY_KEY_ID=
 RAZORPAY_KEY_SECRET=
@@ -177,7 +177,7 @@ RAZORPAY_KEY_SECRET=
 | `GOOGLE_CLIENT_ID` | Google OAuth client ID. |
 | `GOOGLE_CLIENT_SECRET` | Google OAuth client secret. |
 | `S3_BUCKET_NAME` | S3 bucket for product images. |
-| `AWS_ACCESS_KEY` | AWS access key for S3 writes/presigned URLs. |
+| `AWS_ACCESS_KEY_ID` | AWS access key for S3 writes/presigned URLs. |
 | `AWS_SECRET_ACCESS_KEY` | AWS secret key for S3 writes/presigned URLs. |
 | `RAZORPAY_KEY_ID` | Razorpay key ID. |
 | `RAZORPAY_KEY_SECRET` | Razorpay secret used for payment signature verification. |
