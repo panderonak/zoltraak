@@ -1,185 +1,185 @@
 import type { categoryEnum, Order } from "@zoltraak/db/schema";
 
 type FileWithProgress = {
-  id: string;
-  file: File;
-  preview: string;
-  progress: number;
-  uploaded: boolean;
+	id: string;
+	file: File;
+	preview: string;
+	progress: number;
+	uploaded: boolean;
 };
 
 type Category = (typeof categoryEnum.enumValues)[number];
 
 type AdminProductsResponse = {
-  items: {
-    id: string;
-    sellerId: string;
-    name: string;
-    description: string;
-    price: string;
-    category: Category;
-    createdAt: string;
-    updatedAt: string;
-    images: {
-      id: string;
-      name: string;
-      product_id: string;
-      createdAt: string;
-      updatedAt: string;
-    }[];
-  }[];
-  currentPage: number;
-  totalPages: number;
-  totalItems: number;
-  hasNextPage: boolean;
-  hasPreviousPage: boolean;
+	items: {
+		id: string;
+		sellerId: string;
+		name: string;
+		description: string;
+		price: string;
+		category: Category;
+		createdAt: string;
+		updatedAt: string;
+		images: {
+			id: string;
+			name: string;
+			product_id: string;
+			createdAt: string;
+			updatedAt: string;
+		}[];
+	}[];
+	currentPage: number;
+	totalPages: number;
+	totalItems: number;
+	hasNextPage: boolean;
+	hasPreviousPage: boolean;
 };
 
 type WarehouseResponse = {
-  items: {
-    id: string;
-    name: string;
-    pincode: string;
-    tsv: string;
-    createdAt: string;
-    updatedAt: string;
-  }[];
-  currentPage: number;
-  totalPages: number;
-  totalItems: number;
-  hasNextPage: boolean;
-  hasPreviousPage: boolean;
+	items: {
+		id: string;
+		name: string;
+		pincode: string;
+		tsv: string;
+		createdAt: string;
+		updatedAt: string;
+	}[];
+	currentPage: number;
+	totalPages: number;
+	totalItems: number;
+	hasNextPage: boolean;
+	hasPreviousPage: boolean;
 };
 
 type DeliveryPersonResponse = {
-  items: {
-    id: string;
-    name: string;
-    phone: string;
-    warehouse: {
-      name: string;
-    };
-    status: "available" | "busy" | "offline";
-  }[];
-  currentPage: number;
-  totalPages: number;
-  totalItems: number;
-  hasNextPage: boolean;
-  hasPreviousPage: boolean;
+	items: {
+		id: string;
+		name: string;
+		phone: string;
+		warehouse: {
+			name: string;
+		};
+		status: "available" | "busy" | "offline";
+	}[];
+	currentPage: number;
+	totalPages: number;
+	totalItems: number;
+	hasNextPage: boolean;
+	hasPreviousPage: boolean;
 };
 
 type OrdersResponse = {
-  items: {
-    id: string;
-    price: number;
-    status: Order["status"];
-    createdAt: string;
-    user: {
-      name: string;
-    };
-    orderItems: {
-      quantity: number;
-      product: {
-        name: string;
-      };
-    }[];
-  }[];
-  currentPage: number;
-  totalPages: number;
-  totalItems: number;
-  hasNextPage: boolean;
-  hasPreviousPage: boolean;
+	items: {
+		id: string;
+		price: number;
+		status: Order["status"];
+		createdAt: string;
+		user: {
+			name: string;
+		};
+		orderItems: {
+			quantity: number;
+			product: {
+				name: string;
+			};
+		}[];
+	}[];
+	currentPage: number;
+	totalPages: number;
+	totalItems: number;
+	hasNextPage: boolean;
+	hasPreviousPage: boolean;
 };
 
 type WarehousesSearch = {
-  id: string;
-  name: string;
-  pincode: string;
-  similarity: number;
+	id: string;
+	name: string;
+	pincode: string;
+	similarity: number;
 }[];
 
 type ProductsSearch = {
-  id: string;
-  name: string;
-  similarity: number;
+	id: string;
+	name: string;
+	similarity: number;
 }[];
 
 type ProductQuery = {
-  page: number;
-  limit?: number;
-  category?: string;
-  sort?: "newest" | "price_asc" | "price_desc";
+	page: number;
+	limit?: number;
+	category?: string;
+	sort?: "newest" | "price_asc" | "price_desc";
 };
 
 type ProductsResponse = {
-  items: {
-    id: string;
-    sellerId: string;
-    name: string;
-    description: string;
-    price: string;
-    category: string;
-    createdAt: string;
-    updatedAt: string;
-    images: {
-      id: string;
-      name: string;
-      product_id: string;
-      createdAt: string;
-      updatedAt: string;
-    }[];
-  }[];
-  page: number;
-  limit: number;
-  totalPages: number;
+	items: {
+		id: string;
+		sellerId: string;
+		name: string;
+		description: string;
+		price: string;
+		category: string;
+		createdAt: string;
+		updatedAt: string;
+		images: {
+			id: string;
+			name: string;
+			product_id: string;
+			createdAt: string;
+			updatedAt: string;
+		}[];
+	}[];
+	page: number;
+	limit: number;
+	totalPages: number;
 };
 
 type ProductResponse = {
-  id: string;
-  sellerId: string;
-  name: string;
-  description: string;
-  price: string;
-  category: string;
-  createdAt: string;
-  updatedAt: string;
-  images: {
-    id: string;
-    name: string;
-    product_id: string;
-    createdAt: string;
-    updatedAt: string;
-  }[];
+	id: string;
+	sellerId: string;
+	name: string;
+	description: string;
+	price: string;
+	category: string;
+	createdAt: string;
+	updatedAt: string;
+	images: {
+		id: string;
+		name: string;
+		product_id: string;
+		createdAt: string;
+		updatedAt: string;
+	}[];
 };
 
 type DeliveryPersonOrdersResponse = {
-  person: {
-    id: string;
-    name: string;
-    phone: string;
-    status: "available" | "busy" | "offline";
-    orderId: string | null;
-    warehouse: { name: string };
-  };
-  items: {
-    id: string;
-    status: "received" | "reserved" | "payment_pending" | "paid" | "failed";
-    price: number;
-    address: string;
-    createdAt: string;
-    user: { name: string; email: string };
-    orderItems: {
-      quantity: number;
-      price: number;
-      product: { name: string };
-    }[];
-    inventories: { sku: string; quantity: number }[];
-  }[];
-  currentPage: number;
-  totalPages: number;
-  totalItems: number;
-  hasNextPage: boolean;
-  hasPreviousPage: boolean;
+	person: {
+		id: string;
+		name: string;
+		phone: string;
+		status: "available" | "busy" | "offline";
+		orderId: string | null;
+		warehouse: { name: string };
+	};
+	items: {
+		id: string;
+		status: "received" | "reserved" | "payment_pending" | "paid" | "failed";
+		price: number;
+		address: string;
+		createdAt: string;
+		user: { name: string; email: string };
+		orderItems: {
+			quantity: number;
+			price: number;
+			product: { name: string };
+		}[];
+		inventories: { sku: string; quantity: number }[];
+	}[];
+	currentPage: number;
+	totalPages: number;
+	totalItems: number;
+	hasNextPage: boolean;
+	hasPreviousPage: boolean;
 };
 
 export type Product = ProductsResponse["items"][number];
@@ -187,40 +187,40 @@ export type Product = ProductsResponse["items"][number];
 export type Sort = "newest" | "price_asc" | "price_desc";
 
 type CreateOrderPayload = {
-  items: {
-    productId: string;
-    quantity: number;
-  }[];
-  pincode: string;
-  address: string;
+	items: {
+		productId: string;
+		quantity: number;
+	}[];
+	pincode: string;
+	address: string;
 };
 
 type CreateOrderResponse = {
-  orderId: string;
-  razorpayOrderId: string;
-  amount: number;
-  currency: string;
+	orderId: string;
+	razorpayOrderId: string;
+	amount: number;
+	currency: string;
 };
 
 type VerifyPaymentPayload = {
-  razorpay_order_id: string;
-  razorpay_payment_id: string;
-  razorpay_signature: string;
+	razorpay_order_id: string;
+	razorpay_payment_id: string;
+	razorpay_signature: string;
 };
 
 export type {
-  AdminProductsResponse,
-  CreateOrderPayload,
-  CreateOrderResponse,
-  DeliveryPersonOrdersResponse,
-  DeliveryPersonResponse,
-  FileWithProgress,
-  OrdersResponse,
-  ProductQuery,
-  ProductResponse,
-  ProductsResponse,
-  ProductsSearch,
-  VerifyPaymentPayload,
-  WarehouseResponse,
-  WarehousesSearch,
+	AdminProductsResponse,
+	CreateOrderPayload,
+	CreateOrderResponse,
+	DeliveryPersonOrdersResponse,
+	DeliveryPersonResponse,
+	FileWithProgress,
+	OrdersResponse,
+	ProductQuery,
+	ProductResponse,
+	ProductsResponse,
+	ProductsSearch,
+	VerifyPaymentPayload,
+	WarehouseResponse,
+	WarehousesSearch,
 };

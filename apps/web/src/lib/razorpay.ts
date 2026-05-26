@@ -2,15 +2,15 @@ import { env } from "@zoltraak/env/web";
 import type { VerifyPaymentPayload } from "@/types";
 
 type RazorpayOptions = {
-  order: { razorpayOrderId: string; amount: number; currency: string };
-  /**
-   * Called with the typed Razorpay payment response when the user completes
-   * payment. The three fields here are exactly what the backend's verifyPayment
-   * endpoint expects — keeping the types aligned prevents a mismatch at the
-   * call site.
-   */
-  onSuccess: (response: VerifyPaymentPayload) => Promise<void>;
-  onDismiss: () => void;
+	order: { razorpayOrderId: string; amount: number; currency: string };
+	/**
+	 * Called with the typed Razorpay payment response when the user completes
+	 * payment. The three fields here are exactly what the backend's verifyPayment
+	 * endpoint expects — keeping the types aligned prevents a mismatch at the
+	 * call site.
+	 */
+	onSuccess: (response: VerifyPaymentPayload) => Promise<void>;
+	onDismiss: () => void;
 };
 
 /**
@@ -40,30 +40,30 @@ type RazorpayOptions = {
  * own casts or workarounds.
  */
 function openRazorpay({ order, onSuccess, onDismiss }: RazorpayOptions) {
-  return new Promise<void>((resolve) => {
-    const rzp = new (window as any).Razorpay({
-      key: env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-      amount: order.amount,
-      currency: order.currency,
-      order_id: order.razorpayOrderId,
+	return new Promise<void>((resolve) => {
+		const rzp = new (window as any).Razorpay({
+			key: env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+			amount: order.amount,
+			currency: order.currency,
+			order_id: order.razorpayOrderId,
 
-      handler: async (response: Record<string, string>) => {
-        // Cast the raw Razorpay response to the typed payload here so the
-        // rest of the codebase works with a known, validated shape.
-        await onSuccess(response as VerifyPaymentPayload);
-        resolve();
-      },
+			handler: async (response: Record<string, string>) => {
+				// Cast the raw Razorpay response to the typed payload here so the
+				// rest of the codebase works with a known, validated shape.
+				await onSuccess(response as VerifyPaymentPayload);
+				resolve();
+			},
 
-      modal: {
-        ondismiss: () => {
-          onDismiss();
-          resolve();
-        },
-      },
-    });
+			modal: {
+				ondismiss: () => {
+					onDismiss();
+					resolve();
+				},
+			},
+		});
 
-    rzp.open();
-  });
+		rzp.open();
+	});
 }
 
 export { openRazorpay };

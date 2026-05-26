@@ -2,12 +2,12 @@ import { Router } from "express";
 import { requireAdmin } from "@/middlewares/admin";
 import { requireAuth } from "@/middlewares/auth";
 import {
-  completeDelivery,
-  createDeliveryPerson,
-  deleteDeliveryPerson,
-  getAllDeliveryPerson,
-  getDeliveryPersonOrders,
-  updateDeliveryPerson,
+	completeDelivery,
+	createDeliveryPerson,
+	deleteDeliveryPerson,
+	getAllDeliveryPerson,
+	getDeliveryPersonOrders,
+	updateDeliveryPerson,
 } from "@/modules/delivery-persons/service";
 
 const router: Router = Router();

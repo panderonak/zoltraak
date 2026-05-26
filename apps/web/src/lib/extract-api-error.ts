@@ -16,28 +16,28 @@ import { AxiosError } from "axios";
  * than assuming the shape upfront.
  */
 function extractApiError(err: unknown): { code: string; message: string } {
-  if (err instanceof AxiosError) {
-    // err.response is undefined on network errors (no internet, CORS, timeout),
-    // so the optional chain produces `undefined` rather than throwing.
-    // We cast to the known backend error shape and fall back on both fields
-    // so callers always receive a safe string regardless of what the server sent.
-    const data = err.response?.data as
-      | { error?: string; message?: string }
-      | undefined;
+	if (err instanceof AxiosError) {
+		// err.response is undefined on network errors (no internet, CORS, timeout),
+		// so the optional chain produces `undefined` rather than throwing.
+		// We cast to the known backend error shape and fall back on both fields
+		// so callers always receive a safe string regardless of what the server sent.
+		const data = err.response?.data as
+			| { error?: string; message?: string }
+			| undefined;
 
-    return {
-      code: data?.error ?? "UNKNOWN",
-      message: data?.message ?? "Something went wrong. Please try again.",
-    };
-  }
+		return {
+			code: data?.error ?? "UNKNOWN",
+			message: data?.message ?? "Something went wrong. Please try again.",
+		};
+	}
 
-  // Non-Axios errors (e.g. a programming mistake that threw a plain Error)
-  // are treated as unknown failures. We don't expose the raw error message
-  // because it may contain internal implementation details.
-  return {
-    code: "UNKNOWN",
-    message: "Something went wrong. Please try again.",
-  };
+	// Non-Axios errors (e.g. a programming mistake that threw a plain Error)
+	// are treated as unknown failures. We don't expose the raw error message
+	// because it may contain internal implementation details.
+	return {
+		code: "UNKNOWN",
+		message: "Something went wrong. Please try again.",
+	};
 }
 
 export { extractApiError };

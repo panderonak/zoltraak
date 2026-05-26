@@ -5,4 +5,5 @@ import postgres from "postgres";
 
 const client = postgres(env.DATABASE_URL);
 const db = drizzle({ client, schema });
+
 export { db };

@@ -2,9 +2,9 @@ import { Router } from "express";
 import { requireAdmin } from "@/middlewares/admin";
 import { requireAuth } from "@/middlewares/auth";
 import {
-  createInventory,
-  deleteInventory,
-  getAllInventories,
+	createInventory,
+	deleteInventory,
+	getAllInventories,
 } from "@/modules/inventories/service";
 
 const router: Router = Router();

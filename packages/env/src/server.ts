@@ -1,8 +1,8 @@
-import { config } from "dotenv";
 import { existsSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createEnv } from "@t3-oss/env-core";
+import { config } from "dotenv";
 import { z } from "zod";
 
 /**
@@ -10,9 +10,9 @@ import { z } from "zod";
  * Does NOT override already loaded variables.
  */
 function loadEnvIfExists(path: string) {
-  if (existsSync(path)) {
-    config({ path, override: false });
-  }
+	if (existsSync(path)) {
+		config({ path, override: false });
+	}
 }
 
 /**
@@ -31,23 +31,22 @@ loadEnvIfExists(cwdEnvPath);
 loadEnvIfExists(serverEnvPath);
 
 export const env = createEnv({
-  server: {
-    DATABASE_URL: z.string().min(1),
-    BETTER_AUTH_SECRET: z.string().min(32),
-    BETTER_AUTH_URL: z.url(),
-    CORS_ORIGIN: z.url(),
-    NODE_ENV: z
-      .enum(["development", "production", "test"])
-      .default("development"),
-    GOOGLE_CLIENT_ID: z.string().min(1),
-    GOOGLE_CLIENT_SECRET: z.string().min(1),
-    S3_BUCKET_NAME: z.string().min(1),
-    AWS_ACCESS_KEY_ID: z.string().min(1),
-    AWS_SECRET_ACCESS_KEY: z.string().min(1),
-    RAZORPAY_KEY_ID: z.string().min(1),
-    RAZORPAY_KEY_SECRET: z.string().min(1),
-    // RAZORPAY_WEBHOOK_SECRET: z.string().min(1),
-  },
-  runtimeEnv: process.env,
-  emptyStringAsUndefined: true,
+	server: {
+		DATABASE_URL: z.string().min(1),
+		BETTER_AUTH_SECRET: z.string().min(32),
+		BETTER_AUTH_URL: z.url(),
+		CORS_ORIGIN: z.url(),
+		NODE_ENV: z
+			.enum(["development", "production", "test"])
+			.default("development"),
+		GOOGLE_CLIENT_ID: z.string().min(1),
+		GOOGLE_CLIENT_SECRET: z.string().min(1),
+		S3_BUCKET_NAME: z.string().min(1),
+		AWS_ACCESS_KEY_ID: z.string().min(1),
+		AWS_SECRET_ACCESS_KEY: z.string().min(1),
+		RAZORPAY_KEY_ID: z.string().min(1),
+		RAZORPAY_KEY_SECRET: z.string().min(1),
+	},
+	runtimeEnv: process.env,
+	emptyStringAsUndefined: true,
 });

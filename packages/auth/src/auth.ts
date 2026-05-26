@@ -6,48 +6,48 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
 
 const auth = betterAuth({
-  database: drizzleAdapter(db, {
-    provider: "pg",
-    schema: schema,
-  }),
-  user: {
-    additionalFields: {
-      role: {
-        type: "string",
-        required: true,
-        defaultValue: "user",
-        input: false,
-      },
-    },
-  },
-  trustedOrigins: [env.CORS_ORIGIN],
-  socialProviders: {
-    google: {
-      prompt: "select_account",
-      clientId: env.GOOGLE_CLIENT_ID,
-      clientSecret: env.GOOGLE_CLIENT_SECRET,
-    },
-  },
-  secret: env.BETTER_AUTH_SECRET,
-  baseURL: env.BETTER_AUTH_URL,
-  advanced: {
-    defaultCookieAttributes: {
-      // sameSite: "none",
-      // secure: true,
-      // httpOnly: true,
-      sameSite: "lax",
-      secure: false,
-      httpOnly: true,
-    },
-  },
-  session: {
-    cookieCache: {
-      enabled: true,
-      maxAge: 60,
-    },
-  },
+	database: drizzleAdapter(db, {
+		provider: "pg",
+		schema: schema,
+	}),
+	user: {
+		additionalFields: {
+			role: {
+				type: "string",
+				required: true,
+				defaultValue: "user",
+				input: false,
+			},
+		},
+	},
+	trustedOrigins: [env.CORS_ORIGIN],
+	socialProviders: {
+		google: {
+			prompt: "select_account",
+			clientId: env.GOOGLE_CLIENT_ID,
+			clientSecret: env.GOOGLE_CLIENT_SECRET,
+		},
+	},
+	secret: env.BETTER_AUTH_SECRET,
+	baseURL: env.BETTER_AUTH_URL,
+	advanced: {
+		defaultCookieAttributes: {
+			// sameSite: "none",
+			// secure: true,
+			// httpOnly: true,
+			sameSite: "lax",
+			secure: false,
+			httpOnly: true,
+		},
+	},
+	session: {
+		cookieCache: {
+			enabled: true,
+			maxAge: 60,
+		},
+	},
 
-  plugins: [nextCookies()],
+	plugins: [nextCookies()],
 });
 
 export type Session = typeof auth.$Infer.Session;

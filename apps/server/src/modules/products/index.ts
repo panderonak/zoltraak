@@ -2,12 +2,12 @@ import { Router } from "express";
 import { requireAdmin } from "@/middlewares/admin";
 import { requireAuth } from "@/middlewares/auth";
 import {
-  createProduct,
-  getAllAdminProducts,
-  getPresignedUrls,
-  getProduct,
-  getProducts,
-  searchProducts,
+	createProduct,
+	getAllAdminProducts,
+	getPresignedUrls,
+	getProduct,
+	getProducts,
+	searchProducts,
 } from "@/modules/products/service";
 
 const router: Router = Router();

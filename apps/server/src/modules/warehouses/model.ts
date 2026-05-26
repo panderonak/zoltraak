@@ -1,14 +1,14 @@
 import { z } from "zod";
 
 const warehouseSchema = z.object({
-  name: z.string().min(1, { error: "Warehouse name is required" }),
-  pincode: z
-    .string()
-    .length(6, { error: "Pincode must be exactly 6 characters" }),
+	name: z.string().min(1, { error: "Warehouse name is required" }),
+	pincode: z
+		.string()
+		.length(6, { error: "Pincode must be exactly 6 characters" }),
 });
 
 const searchSchema = z.object({
-  query: z.string().min(1, { error: "Warehouse name cannot be empty" }),
+	query: z.string().min(1, { error: "Warehouse name cannot be empty" }),
 });
 
-export { warehouseSchema, searchSchema };
+export { searchSchema, warehouseSchema };

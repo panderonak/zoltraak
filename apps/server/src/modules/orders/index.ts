@@ -2,10 +2,10 @@ import { Router } from "express";
 import { requireAdmin } from "@/middlewares/admin";
 import { requireAuth } from "@/middlewares/auth";
 import {
-  createOrder,
-  getAllOrders,
-  verifyPayment,
-  updateOrderStatus,
+	createOrder,
+	getAllOrders,
+	updateOrderStatus,
+	verifyPayment,
 } from "@/modules/orders/service";
 
 const router: Router = Router();

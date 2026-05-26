@@ -1,26 +1,26 @@
 {
-  "name": "@zoltraak/auth",
-  "type": "module",
-  "exports": {
-    ".": {
-      "default": "./src/auth.ts"
-    },
-    "./*": {
-      "default": "./src/*.ts"
-    }
-  },
-  "scripts": {
-    "auth:generate": "DOTENV_CONFIG_PATH=../../apps/server/.env pnpm dlx auth@latest generate"
-  },
-  "dependencies": {
-    "@zoltraak/db": "workspace:*",
-    "@zoltraak/env": "workspace:*",
-    "better-auth": "catalog:",
-    "dotenv": "catalog:",
-    "zod": "catalog:"
-  },
-  "devDependencies": {
-    "@zoltraak/config": "workspace:*",
-    "typescript": "^5"
-  }
+	"name": "@zoltraak/auth",
+	"type": "module",
+	"exports": {
+		".": {
+			"default": "./src/auth.ts"
+		},
+		"./*": {
+			"default": "./src/*.ts"
+		}
+	},
+	"scripts": {
+		"auth:generate": "DOTENV_CONFIG_PATH=../../apps/server/.env pnpm dlx auth@latest generate"
+	},
+	"dependencies": {
+		"@zoltraak/db": "workspace:*",
+		"@zoltraak/env": "workspace:*",
+		"better-auth": "catalog:",
+		"dotenv": "catalog:",
+		"zod": "catalog:"
+	},
+	"devDependencies": {
+		"@zoltraak/config": "workspace:*",
+		"typescript": "^5"
+	}
 }

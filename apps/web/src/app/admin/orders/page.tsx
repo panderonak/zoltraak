@@ -10,40 +10,40 @@ import { fetchOrders } from "@/http/api";
 import type { OrdersResponse } from "@/types";
 
 const Page = () => {
-  const [page, setPage] = useState(1);
+	const [page, setPage] = useState(1);
 
-  const { data, isLoading, isFetching, isError, refetch, isRefetching } =
-    useQuery<{ data: OrdersResponse }>({
-      queryKey: ["orders", page],
-      queryFn: () => fetchOrders(page),
-      placeholderData: (prev) => prev,
-      refetchOnWindowFocus: false,
-      staleTime: 120 * 1_000,
-    });
+	const { data, isLoading, isFetching, isError, refetch, isRefetching } =
+		useQuery<{ data: OrdersResponse }>({
+			queryKey: ["orders", page],
+			queryFn: () => fetchOrders(page),
+			placeholderData: (prev) => prev,
+			refetchOnWindowFocus: false,
+			staleTime: 120 * 1_000,
+		});
 
-  const items = data?.data.items ?? [];
+	const items = data?.data.items ?? [];
 
-  if (!isLoading && items.length === 0) {
-    return <OrdersEmptyState />;
-  }
+	if (!isLoading && items.length === 0) {
+		return <OrdersEmptyState />;
+	}
 
-  if (isError) {
-    return <ErrorState refetch={refetch} isRefetching={isRefetching} />;
-  }
+	if (isError) {
+		return <ErrorState refetch={refetch} isRefetching={isRefetching} />;
+	}
 
-  return (
-    <div className="container mx-auto py-10">
-      <DataTable
-        columns={columns}
-        data={items}
-        page={data?.data.currentPage ?? 1}
-        totalPages={data?.data.totalPages ?? 1}
-        onPageChange={setPage}
-        isFetching={isFetching}
-        isLoading={isLoading}
-      />
-    </div>
-  );
+	return (
+		<div className="container mx-auto py-10">
+			<DataTable
+				columns={columns}
+				data={items}
+				page={data?.data.currentPage ?? 1}
+				totalPages={data?.data.totalPages ?? 1}
+				onPageChange={setPage}
+				isFetching={isFetching}
+				isLoading={isLoading}
+			/>
+		</div>
+	);
 };
 
 export default Page;
