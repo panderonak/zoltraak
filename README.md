@@ -541,6 +541,3 @@ Built by Ronak Pandey.
 
 - GitHub: [panderonak](https://github.com/panderonak)
 - Repository: [panderonak/zoltraak](https://github.com/panderonak/zoltraak)
-- LinkedIn: add your [LinkedIn](https://www.linkedin.com/) profile URL
-- Portfolio: add your portfolio URL
-- Email: add your preferred contact email
