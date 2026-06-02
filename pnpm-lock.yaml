@@ -310,6 +310,9 @@ importers:
 
   packages/db:
     dependencies:
+      '@zoltraak/config':
+        specifier: workspace:*
+        version: link:../config
       '@zoltraak/env':
         specifier: workspace:*
         version: link:../env
@@ -326,9 +329,6 @@ importers:
         specifier: 'catalog:'
         version: 4.3.6
     devDependencies:
-      '@zoltraak/config':
-        specifier: workspace:*
-        version: link:../config
       drizzle-kit:
         specifier: ^0.31.10
         version: 0.31.10

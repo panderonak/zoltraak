@@ -1,6 +1,12 @@
 packages:
   - apps/*
   - packages/*
+allowBuilds:
+  '@prisma/engines': true
+  esbuild: true
+  msw: true
+  prisma: true
+  sharp: true
 catalog:
   "@types/react": ^19.2.10
   "@types/react-dom": ^19.2.3

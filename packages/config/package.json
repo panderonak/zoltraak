@@ -1,5 +1,10 @@
 {
 	"name": "@zoltraak/config",
 	"version": "0.0.0",
-	"private": true
+	"private": true,
+	"type": "module",
+	"exports": {
+		".": "./index.ts",
+		"./tsconfig.base.json": "./tsconfig.base.json"
+	}
 }

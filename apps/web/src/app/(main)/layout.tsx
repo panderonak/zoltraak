@@ -2,7 +2,6 @@ import { auth } from "@zoltraak/auth";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { Cart } from "@/components/cart";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { NavBar } from "@/components/nav-bar";
 

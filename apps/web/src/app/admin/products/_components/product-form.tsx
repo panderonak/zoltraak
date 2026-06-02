@@ -2,6 +2,8 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
+
+import { MAX_FILES, MAX_SIZE } from "@zoltraak/config";
 import { Button } from "@zoltraak/ui/components/button";
 import {
 	Card,
@@ -42,7 +44,6 @@ import { toast } from "sonner";
 import { v4 as uuid } from "uuid";
 import * as z from "zod";
 import { FileItem } from "@/app/admin/products/_components/file-item";
-import { MAX_FILES, MAX_SIZE } from "@/config";
 import { api } from "@/lib/axios";
 import { formatFileSize } from "@/lib/format-file-size";
 import { cn } from "@/lib/utils";

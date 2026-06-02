@@ -1,3 +1,4 @@
+import { PRODUCT_CATEGORIES } from "@zoltraak/config";
 import { user } from "@zoltraak/db/schema/auth";
 import { relations } from "drizzle-orm";
 import {
@@ -13,16 +14,7 @@ import {
 	varchar,
 } from "drizzle-orm/pg-core";
 
-export const categoryEnum = pgEnum("category_enum", [
-	"Fresh",
-	"Dairy",
-	"Snacks",
-	"Beverages",
-	"Staples",
-	"Instant Food",
-	"Personal Care",
-	"Household",
-]);
+export const categoryEnum = pgEnum("category_enum", PRODUCT_CATEGORIES);
 
 export const deliveryPersonStatusEnum = pgEnum("delivery_person_status", [
 	"available",
