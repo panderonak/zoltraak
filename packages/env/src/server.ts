@@ -30,23 +30,23 @@ const serverEnvPath = resolve(repoRoot, "apps/server/.env");
 loadEnvIfExists(cwdEnvPath);
 loadEnvIfExists(serverEnvPath);
 
-export const env = createEnv({
-	server: {
-		DATABASE_URL: z.string().min(1),
-		BETTER_AUTH_SECRET: z.string().min(32),
-		BETTER_AUTH_URL: z.url(),
-		CORS_ORIGIN: z.url(),
-		NODE_ENV: z
-			.enum(["development", "production", "test"])
-			.default("development"),
-		GOOGLE_CLIENT_ID: z.string().min(1),
-		GOOGLE_CLIENT_SECRET: z.string().min(1),
-		S3_BUCKET_NAME: z.string().min(1),
-		AWS_ACCESS_KEY_ID: z.string().min(1),
-		AWS_SECRET_ACCESS_KEY: z.string().min(1),
-		RAZORPAY_KEY_ID: z.string().min(1),
-		RAZORPAY_KEY_SECRET: z.string().min(1),
-	},
+const server = {
+	DATABASE_URL: z.string().min(1),
+	BETTER_AUTH_SECRET: z.string().min(32),
+	BETTER_AUTH_URL: z.url(),
+	CORS_ORIGIN: z.url(),
+	NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
+	GOOGLE_CLIENT_ID: z.string().min(1),
+	GOOGLE_CLIENT_SECRET: z.string().min(1),
+	S3_BUCKET_NAME: z.string().min(1),
+	AWS_ACCESS_KEY_ID: z.string().min(1),
+	AWS_SECRET_ACCESS_KEY: z.string().min(1),
+	RAZORPAY_KEY_ID: z.string().min(1),
+	RAZORPAY_KEY_SECRET: z.string().min(1),
+};
+
+export const env = createEnv<undefined, typeof server>({
+	server,
 	runtimeEnv: process.env,
 	emptyStringAsUndefined: true,
 });
