@@ -32,13 +32,11 @@ const auth = betterAuth({
 	baseURL: env.BETTER_AUTH_URL,
 	advanced: {
 		defaultCookieAttributes: {
-			// sameSite: "none",
-			// secure: true,
-			// httpOnly: true,
-			sameSite: "lax",
-			secure: false,
+			sameSite: "none",
+			secure: true,
 			httpOnly: true,
 		},
+		useSecureCookies: true,
 	},
 	session: {
 		cookieCache: {
@@ -46,7 +44,6 @@ const auth = betterAuth({
 			maxAge: 60,
 		},
 	},
-
 	plugins: [nextCookies()],
 });
 
