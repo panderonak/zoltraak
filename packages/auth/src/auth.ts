@@ -3,7 +3,6 @@ import * as schema from "@zoltraak/db/schema/auth";
 import { env } from "@zoltraak/env/server";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { nextCookies } from "better-auth/next-js";
 
 const auth = betterAuth({
 	database: drizzleAdapter(db, {
@@ -44,7 +43,6 @@ const auth = betterAuth({
 			maxAge: 60,
 		},
 	},
-	plugins: [nextCookies()],
 });
 
 export type Session = typeof auth.$Infer.Session;
