@@ -7,32 +7,29 @@ import { attachSession } from "@/middlewares/session";
 import { router } from "@/modules";
 
 const app: Express = express();
-
-const port = 3000;
+const port = Number(process.env.PORT) || 3000;
 
 app.use(
-  cors({
-    origin: env.CORS_ORIGIN,
-    methods: ["GET", "POST", "OPTIONS", "PATCH", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
-  }),
+	cors({
+		origin: env.CORS_ORIGIN,
+		methods: ["GET", "POST", "OPTIONS", "PATCH", "DELETE"],
+		allowedHeaders: ["Content-Type", "Authorization"],
+		credentials: true,
+	}),
 );
 
 app.all("/api/auth/*splat", toNodeHandler(auth));
-
 app.use(express.json());
 
 app.get("/", (_req, res) => {
-  res.status(200).send("OK");
+	res.status(200).send("OK");
 });
 
 app.use(attachSession);
-
 app.use("/api", router);
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+app.listen(port, "0.0.0.0", () => {
+	console.log(`Server is running on port ${port}`);
 });
 
 export { app };
