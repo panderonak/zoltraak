@@ -185,16 +185,16 @@ RAZORPAY_KEY_SECRET=
 ### `apps/web/.env`
 
 ```env
-NEXT_PUBLIC_SERVER_URL=http://localhost:3000
 NEXT_PUBLIC_URL=http://localhost:3001
+BACKEND_URL=http://localhost:3000
 NEXT_PUBLIC_DISTRIBUTION_DOMAIN_NAME=
 NEXT_PUBLIC_RAZORPAY_KEY_ID=
 ```
 
 | Variable | Purpose |
 | --- | --- |
-| `NEXT_PUBLIC_SERVER_URL` | Backend API origin used by the frontend. |
 | `NEXT_PUBLIC_URL` | Frontend app URL. |
+| `BACKEND_URL` | Backend origin used by the server-side `/api/*` proxy. |
 | `NEXT_PUBLIC_DISTRIBUTION_DOMAIN_NAME` | Public image/CDN domain used by Next Image. |
 | `NEXT_PUBLIC_RAZORPAY_KEY_ID` | Razorpay publishable key for browser checkout. |
 
@@ -452,10 +452,12 @@ Expected deployment shape:
 
 Production checklist:
 
-- Set `BETTER_AUTH_URL` to the deployed API/auth URL.
+- Set `BETTER_AUTH_URL` to the deployed frontend URL so auth cookies stay
+  first-party when Vercel proxies `/api/*` to the backend.
 - Set `CORS_ORIGIN` to the deployed frontend URL.
-- Set `NEXT_PUBLIC_SERVER_URL` to the deployed API URL.
-- Use production Google OAuth callback URLs.
+- Set the web app's `BACKEND_URL` to the deployed API URL.
+- Set the Google OAuth callback URL to
+  `<deployed frontend URL>/api/auth/callback/google`.
 - Use production Razorpay keys.
 - Use secure cookie settings for HTTPS production deployments.
 - Apply migrations with `pnpm db:migrate`.
