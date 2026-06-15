@@ -1,4 +1,3 @@
-import { auth } from "@zoltraak/auth";
 import { Badge } from "@zoltraak/ui/components/badge";
 import { buttonVariants } from "@zoltraak/ui/components/button";
 import {
@@ -20,16 +19,14 @@ import {
 	TrendingUp,
 	Zap,
 } from "lucide-react";
-import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
+import { getServerSession } from "@/lib/auth-server";
 
 export default async function Home() {
-	const session = await auth.api.getSession({
-		headers: await headers(),
-	});
+	const session = await getServerSession();
 
 	if (session) {
 		return redirect("/products");

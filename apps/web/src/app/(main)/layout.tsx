@@ -1,9 +1,8 @@
-import { auth } from "@zoltraak/auth";
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { NavBar } from "@/components/nav-bar";
+import { getServerSession } from "@/lib/auth-server";
 
 export const metadata: Metadata = {
 	title: "Zoltraak",
@@ -15,9 +14,7 @@ export default async function AdminLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	const session = await auth.api.getSession({
-		headers: await headers(),
-	});
+	const session = await getServerSession();
 
 	if (!session) {
 		return redirect("/sign-in");

@@ -1,12 +1,9 @@
-import { auth } from "@zoltraak/auth";
-import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { BecomeSellerView } from "@/app/(main)/become-seller/_components/become-seller-view";
+import { getServerSession } from "@/lib/auth-server";
 
 const Page = async () => {
-	const session = await auth.api.getSession({
-		headers: await headers(),
-	});
+	const session = await getServerSession();
 
 	if (!session) {
 		redirect("/sign-in");

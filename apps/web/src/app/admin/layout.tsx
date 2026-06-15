@@ -1,4 +1,3 @@
-import { auth } from "@zoltraak/auth";
 import { Separator } from "@zoltraak/ui/components/separator";
 import {
 	SidebarInset,
@@ -6,10 +5,9 @@ import {
 	SidebarTrigger,
 } from "@zoltraak/ui/components/sidebar";
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { AppSidebar } from "@/components/app-sidebar";
-import { MaxWidthWrapper } from "@/components/max-width-wrapper";
+import { getServerSession } from "@/lib/auth-server";
 
 export const metadata: Metadata = {
 	title: "Admin",
@@ -21,9 +19,7 @@ export default async function AdminLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	const session = await auth.api.getSession({
-		headers: await headers(),
-	});
+	const session = await getServerSession();
 
 	if (!session) {
 		return redirect("/sign-in");
